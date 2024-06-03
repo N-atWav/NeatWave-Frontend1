@@ -49,6 +49,7 @@
     border-radius: 4px;
     color: #333;
 }
+
 .calc-container button {
     display: block; /* Зробити кнопку блоком */
     margin: 20px auto 0; /* Посередині зверху */
@@ -65,5 +66,3 @@
 .calc-container button:hover {
     background-color: #45a049;
 }
-
-

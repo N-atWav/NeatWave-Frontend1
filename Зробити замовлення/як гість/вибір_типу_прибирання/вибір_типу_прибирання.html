@@ -132,43 +132,83 @@
             window.location.href = "/ціна/prise.html";
         }
         
-        function calculatePrice() {
-            const area = document.getElementById('area').value;
-            const cleaningType = document.getElementById('cleaning-type').value;
-            const cleaningMethod = document.getElementById('cleaning-method').value;
-            const priceElement = document.getElementById('price');
-            let pricePerSquareMeter = 0;
+       
+       
 
-            if (cleaningType === 'spring-cleaning') {
-                if (cleaningMethod === 'one-time') {
-                    pricePerSquareMeter = 45;
-                } else if (cleaningMethod === 'contract') {
-                    pricePerSquareMeter = 35;
-                }
-            } else if (cleaningType === 'Cleaning-after-repair-or-construction-work') {
-                if (cleaningMethod === 'one-time') {
-                    pricePerSquareMeter = 30;
-                } else if (cleaningMethod === 'contract') {
-                    pricePerSquareMeter = 25;
-                }
-            } else if (cleaningType === 'Cleaning-up-after-events') {
-                if (cleaningMethod === 'one-time') {
-                    pricePerSquareMeter = 55;
-                } else if (cleaningMethod === 'contract') {
-                    pricePerSquareMeter = 45;
-                }
-            } else if (cleaningType === 'Specific-cleaning') {
-                if (cleaningMethod === 'one-time') {
-                    pricePerSquareMeter = 55;
-                } else if (cleaningMethod === 'contract') {
-                    pricePerSquareMeter = 45;
-                }
+        
+    
+</script>
+<script>
+    function calculatePrice() {
+        const area = document.getElementById('area').value;
+        const cleaningType = document.getElementById('cleaning-type').value;
+        const cleaningMethod = document.getElementById('cleaning-method').value;
+        const priceElement = document.getElementById('price');
+        let pricePerSquareMeter = 0;
+
+        if (cleaningType === 'spring-cleaning') {
+            if (cleaningMethod === 'one-time') {
+                pricePerSquareMeter = 45;
+            } else if (cleaningMethod === 'contract') {
+                pricePerSquareMeter = 35;
+            }
+        } else if (cleaningType === 'Cleaning-after-repair-or-construction-work') {
+            if (cleaningMethod === 'one-time') {
+                pricePerSquareMeter = 30;
+            } else if (cleaningMethod === 'contract') {
+                pricePerSquareMeter = 25;
+            }
+        } else if (cleaningType === 'Cleaning-up-after-events') {
+            if (cleaningMethod === 'one-time') {
+                pricePerSquareMeter = 55;
+            } else if (cleaningMethod === 'contract') {
+                pricePerSquareMeter = 45;
+            }
+        } else if (cleaningType === 'Specific-cleaning') {
+            if (cleaningMethod === 'one-time') {
+                pricePerSquareMeter = 55;
+            } else if (cleaningMethod === 'contract') {
+                pricePerSquareMeter = 45;
+            }
+        }
+
+        const totalPrice = area * pricePerSquareMeter;
+        priceElement.textContent = `Ціна: ${totalPrice} грн`;
+    }
+
+    document.addEventListener("DOMContentLoaded", function() {
+        const cleaningMethodSelect = document.getElementById('cleaning-method');
+        const cleaningTypeSelect = document.getElementById('cleaning-type');
+
+        function updateCleaningTypes() {
+            const selectedMethod = cleaningMethodSelect.value;
+
+            // Видаляємо всі варіанти типів прибирання
+            while (cleaningTypeSelect.firstChild) {
+                cleaningTypeSelect.removeChild(cleaningTypeSelect.firstChild);
             }
 
-            const totalPrice = area * pricePerSquareMeter;
-            priceElement.textContent = `Ціна: ${totalPrice} грн`;
+            // Додаємо лише ті типи прибирання, які відповідають обраному методу прибирання
+            if (selectedMethod === 'contract') {
+                cleaningTypeSelect.appendChild(new Option('Генеральне прибирання', 'spring-cleaning'));
+                cleaningTypeSelect.appendChild(new Option('Cпецифічне прибирання', 'Specific-cleaning'));
+            } else {
+                cleaningTypeSelect.appendChild(new Option('Генеральне прибирання', 'spring-cleaning'));
+                cleaningTypeSelect.appendChild(new Option('Прибирання після ремонтних або будівельних робіт', 'Cleaning-after-repair-or-construction-work'));
+                cleaningTypeSelect.appendChild(new Option('Після ремонту', 'Cleaning-up-after-events'));
+                cleaningTypeSelect.appendChild(new Option('Cпецифічне прибирання', 'Specific-cleaning'));
+            }
         }
-    </script>
+
+        updateCleaningTypes(); // Викликаємо функцію один раз при завантаженні сторінки
+
+        // Викликаємо функцію при зміні вибору методу прибирання
+        cleaningMethodSelect.addEventListener('change', updateCleaningTypes);
+    });
+</script>
+
+
+   
 </head>
 <body>
     
@@ -197,18 +237,20 @@
     <div class="calc-container">
         <form action="додаткова-інформація/додаткова-інформація.html" onsubmit="return validateForm()">
         <h2 >Замовлення прибирання</h2>
+        
+
+        <label for="cleaning-method">Метод прибирання:</label>
+        <select id="cleaning-method" onchange="calculatePrice()">
+            <option value="one-time">Одноразове</option>
+            <option value="contract">Контракт</option>
+        </select>
+
         <label for="cleaning-type">Тип прибирання:</label>
         <select id="cleaning-type" onchange="calculatePrice()">
             <option value="spring-cleaning">Генеральне прибирання</option>
             <option value="Cleaning-after-repair-or-construction-work">Прибирання після ремонтних або будівельних робіт</option>
             <option value="Cleaning-up-after-events">Після ремонту</option>
             <option value="Specific-cleaning">Cпецифічне прибирання</option>
-        </select>
-
-        <label for="cleaning-method">Метод прибирання:</label>
-        <select id="cleaning-method" onchange="calculatePrice()">
-            <option value="one-time">Одноразове</option>
-            <option value="contract">Контракт</option>
         </select>
 
         <label for="area">Кількість квадратних метрів:</label>
@@ -219,12 +261,7 @@
 
         <div class="result" id="price">Ціна: 0 грн</div>
 
-        <label for="payment-method">Метод оплати:</label>
-        <select id="payment-method">
-            <option value="privat">ПриватБанк</option>
-            <option value="mono">Монобанк</option>
-            <option value="after-cleaning">Оплата після прибирання</option>
-        </select>
+        
 
         <button type="submit">Замовити</button>
         <div class="g-signin2" data-onsuccess="onSignIn" data-theme="dark"></div>
