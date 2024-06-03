@@ -93,6 +93,9 @@ function goToauthorizationPage() {
         function goToprisePage() {
             window.location.href = "/ціна/prise.html";
         }
+        function goToMake_an_orderPage() {
+            window.location.href = "/Зробити замовлення/вибір.html";
+        }
     </script>
   
 </head>
@@ -103,7 +106,7 @@ function goToauthorizationPage() {
                 <h1 onclick="goToHomePage()">NeatWave</h1>
                 <nav>
                     <ul>
-                        <li><a href="#Make_an_order">Зробити замовлення</a></li>
+                        <li><a onclick="goToMake_an_orderPage()">Зробити замовлення</a></li>
                         <li><a onclick="goToprisePage()">Ціни</a></li>
                         <li><a href="#about">Про нас</a></li>
                         <li><a href="#contact1">Зв’язатися</a></li>

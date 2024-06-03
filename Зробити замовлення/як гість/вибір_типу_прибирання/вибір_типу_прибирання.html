@@ -4,32 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NeatWave</title>
-    <link rel="stylesheet" href="authorization.css">
-
     <link rel="stylesheet" href="/головна/Slil.css">
+
+    <link rel="stylesheet" href="вибір_типу_прибирання.css">
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <script src="https://apis.google.com/js/platform.js" async defer></script>
-    <meta name="google-signin-client_id" content="540098223058-lim2qsf54ffh8fslah66ig1dkcqeah8b.apps.googleusercontent.com">
-    <script>
-        function onSignIn(googleUser) {
-            var profile = googleUser.getBasicProfile();
-            console.log('ID: ' + profile.getId());
-            console.log('Name: ' + profile.getName());
-            console.log('Image URL: ' + profile.getImageUrl());
-            console.log('Email: ' + profile.getEmail());
-            // Дополнительный код для обработки данных пользователя
-        }
 
-        function signOut() {
-            var auth2 = gapi.auth2.getAuthInstance();
-            auth2.signOut().then(function () {
-                console.log('User signed out.');
-                // Дополнительный код для выхода пользователя
-            });
-        }
-    </script>
   
+   
     <script>
       
 
@@ -117,6 +100,7 @@
                 }, false);
             }
         })();
+
         function goToHomePage() {
             window.location.href = "/головна/index.html";
         }
@@ -147,6 +131,43 @@
         function goToprisePage() {
             window.location.href = "/ціна/prise.html";
         }
+        
+        function calculatePrice() {
+            const area = document.getElementById('area').value;
+            const cleaningType = document.getElementById('cleaning-type').value;
+            const cleaningMethod = document.getElementById('cleaning-method').value;
+            const priceElement = document.getElementById('price');
+            let pricePerSquareMeter = 0;
+
+            if (cleaningType === 'spring-cleaning') {
+                if (cleaningMethod === 'one-time') {
+                    pricePerSquareMeter = 45;
+                } else if (cleaningMethod === 'contract') {
+                    pricePerSquareMeter = 35;
+                }
+            } else if (cleaningType === 'Cleaning-after-repair-or-construction-work') {
+                if (cleaningMethod === 'one-time') {
+                    pricePerSquareMeter = 30;
+                } else if (cleaningMethod === 'contract') {
+                    pricePerSquareMeter = 25;
+                }
+            } else if (cleaningType === 'Cleaning-up-after-events') {
+                if (cleaningMethod === 'one-time') {
+                    pricePerSquareMeter = 55;
+                } else if (cleaningMethod === 'contract') {
+                    pricePerSquareMeter = 45;
+                }
+            } else if (cleaningType === 'Specific-cleaning') {
+                if (cleaningMethod === 'one-time') {
+                    pricePerSquareMeter = 55;
+                } else if (cleaningMethod === 'contract') {
+                    pricePerSquareMeter = 45;
+                }
+            }
+
+            const totalPrice = area * pricePerSquareMeter;
+            priceElement.textContent = `Ціна: ${totalPrice} грн`;
+        }
     </script>
 </head>
 <body>
@@ -167,56 +188,49 @@
             </div>
         </div>
     </header>
-    <div class="conе">
-    <div class="auth-container1">
-        <h2>Авторизація</h2>
-        <form>
-            <input type="text" placeholder="Логін" required>
-            <input type="password" placeholder="Пароль" required>
-            <button type="submit">Увійти</button>
-            <div class="g-signin2" data-onsuccess="onSignIn" data-theme="dark"></div>
-        </form>
-        <div class="register-link1">
-            <p>Немає облікового запису? <a onclick="goToregistrationPage()">Зареєструватися</a></p>
-        </div>
-    </div>
+   
 
-    <script>
-        (function() {
-            var a = document.getElementById('myHeader'), b = null;
-            window.addEventListener('scroll', Ascroll, false);
-            document.body.addEventListener('scroll', Ascroll, false);
-            function Ascroll() {
-                if (b == null) {
-                    var Sa = getComputedStyle(a, ''), s = '';
-                    for (var i = 0; i < Sa.length; i++) {
-                        if (Sa[i].indexOf('overflow') == 0 || Sa[i].indexOf('padding') == 0 || Sa[i].indexOf('border') == 0 || Sa[i].indexOf('outline') == 0 || Sa[i].indexOf('box-shadow') == 0 || Sa[i].indexOf('background') == 0) {
-                            s += Sa[i] + ': ' + Sa.getPropertyValue(Sa[i]) + '; ';
-                        }
-                    }
-                    b = document.createElement('div');
-                    b.style.cssText = s + ' box-sizing: border-box; width: ' + a.offsetWidth + 'px;';
-                    a.insertBefore(b, a.firstChild);
-                    var l = a.childNodes.length;
-                    for (var i = 1; i < l; i++) {
-                        b.appendChild(a.childNodes[1]);
-                    }
-                    a.style.height = b.getBoundingClientRect().height + 'px';
-                    a.style.padding = '0';
-                    a.style.border = '0';
-                }
-                if (a.getBoundingClientRect().top <= 0) {
-                    b.className = 'sticky';
-                } else {
-                    b.className = '';
-                }
-                window.addEventListener('resize', function() {
-                    a.children[0].style.width = getComputedStyle(a, '').width;
-                }, false);
-            }
-        })();
-    </script>
+   
+
+
+    
+    <div class="calc-container">
+        <form action="додаткова-інформація/додаткова-інформація.html" onsubmit="return validateForm()">
+        <h2 >Замовлення прибирання</h2>
+        <label for="cleaning-type">Тип прибирання:</label>
+        <select id="cleaning-type" onchange="calculatePrice()">
+            <option value="spring-cleaning">Генеральне прибирання</option>
+            <option value="Cleaning-after-repair-or-construction-work">Прибирання після ремонтних або будівельних робіт</option>
+            <option value="Cleaning-up-after-events">Після ремонту</option>
+            <option value="Specific-cleaning">Cпецифічне прибирання</option>
+        </select>
+
+        <label for="cleaning-method">Метод прибирання:</label>
+        <select id="cleaning-method" onchange="calculatePrice()">
+            <option value="one-time">Одноразове</option>
+            <option value="contract">Контракт</option>
+        </select>
+
+        <label for="area">Кількість квадратних метрів:</label>
+        <input type="number" id="area" placeholder="Введіть площу" oninput="calculatePrice()">
+
+        <label for="additional-info">Додаткова інформація:</label>
+        <textarea id="additional-info" rows="4" placeholder="Введіть додаткову інформацію"></textarea>
+
+        <div class="result" id="price">Ціна: 0 грн</div>
+
+        <label for="payment-method">Метод оплати:</label>
+        <select id="payment-method">
+            <option value="privat">ПриватБанк</option>
+            <option value="mono">Монобанк</option>
+            <option value="after-cleaning">Оплата після прибирання</option>
+        </select>
+
+        <button type="submit">Замовити</button>
+        <div class="g-signin2" data-onsuccess="onSignIn" data-theme="dark"></div>
+    </form>
     </div>
+</body>
     <footer>
         <div class="footer-container">
             <div class="footer-section">
@@ -245,5 +259,3 @@
                 <p> Прототип сайту.</p>
         </div>
     </footer>
-</body>
-</html>

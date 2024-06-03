@@ -4,34 +4,33 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NeatWave</title>
-    <link rel="stylesheet" href="authorization.css">
-
+    <link rel="stylesheet" href="гість.css">
     <link rel="stylesheet" href="/головна/Slil.css">
-    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <script src="https://apis.google.com/js/platform.js" async defer></script>
-    <meta name="google-signin-client_id" content="540098223058-lim2qsf54ffh8fslah66ig1dkcqeah8b.apps.googleusercontent.com">
     <script>
-        function onSignIn(googleUser) {
-            var profile = googleUser.getBasicProfile();
-            console.log('ID: ' + profile.getId());
-            console.log('Name: ' + profile.getName());
-            console.log('Image URL: ' + profile.getImageUrl());
-            console.log('Email: ' + profile.getEmail());
-            // Дополнительный код для обработки данных пользователя
+        function validateForm() {
+            var name = document.forms["registrationForm"]["name"].value;
+            var phone = document.forms["registrationForm"]["phone"].value;
+            var email = document.forms["registrationForm"]["email"].value;
+            var address = document.forms["registrationForm"]["address"].value;
+            var friendCode = document.forms["registrationForm"]["friendCode"].value;
+
+            if (name == "" || phone == "" || email == "" || address == "") {
+                alert("Будь ласка, заповніть всі обов'язкові поля");
+                return false;
+            }
+
+            // Додаткові перевірки можна додати тут
+            return true; // Повертаємо true, якщо всі поля заповнені
         }
 
-        function signOut() {
-            var auth2 = gapi.auth2.getAuthInstance();
-            auth2.signOut().then(function () {
-                console.log('User signed out.');
-                // Дополнительный код для выхода пользователя
-            });
+        function allowOnlyNumbers(event) {
+            var key = event.which || event.keyCode;
+            if (key < 48 || key > 57) {
+                event.preventDefault();
+            }
         }
-    </script>
-  
-    <script>
-      
 
         document.addEventListener("DOMContentLoaded", function() {
             var faqItems = document.querySelectorAll('.faq-item');
@@ -49,9 +48,7 @@
                     }
                 });
             });
-        });
 
-        document.addEventListener('DOMContentLoaded', function() {
             const testimonialsList = document.querySelector('.testimonials-list');
             const testimonialItems = document.querySelectorAll('.testimonial-item');
             const prevBtn = document.getElementById('prev-btn');
@@ -82,9 +79,7 @@
             });
 
             showTestimonial(currentIndex);
-        });
 
-        (function() {
             var a = document.getElementById('myHeader'), b = null;
             window.addEventListener('scroll', Ascroll, false);
             document.body.addEventListener('scroll', Ascroll, false);
@@ -116,7 +111,8 @@
                     a.children[0].style.width = getComputedStyle(a, '').width;
                 }, false);
             }
-        })();
+        });
+
         function goToHomePage() {
             window.location.href = "/головна/index.html";
         }
@@ -144,13 +140,18 @@
         function goTotestimonialsPage() {
             window.location.href = "/головна/index.html#testimonials";
         }
+
+        function goToMake_an_order_12Page() {
+            if (validateForm()) { // Виклик validateForm для перевірки перед переходом
+                window.location.href = "вибір_типу_прибирання/вибір_типу_прибирання.html";
+            }
+        }
         function goToprisePage() {
             window.location.href = "/ціна/prise.html";
         }
     </script>
 </head>
 <body>
-    
     <header id="myHeader">
         <div class="container">
             <div class="rown">
@@ -168,54 +169,17 @@
         </div>
     </header>
     <div class="conе">
-    <div class="auth-container1">
-        <h2>Авторизація</h2>
-        <form>
-            <input type="text" placeholder="Логін" required>
-            <input type="password" placeholder="Пароль" required>
-            <button type="submit">Увійти</button>
-            <div class="g-signin2" data-onsuccess="onSignIn" data-theme="dark"></div>
-        </form>
-        <div class="register-link1">
-            <p>Немає облікового запису? <a onclick="goToregistrationPage()">Зареєструватися</a></p>
+        <div class="auth-container1">
+            <h2>Замовлення</h2>
+            <form name="registrationForm" onsubmit="return false;">
+                <input type="text" name="name" placeholder="ПІБ" required>
+                <input type="text" name="phone" placeholder="Номер телефону" required onkeypress="allowOnlyNumbers(event)">
+                <input type="email" name="email" placeholder="Пошта" required>
+                <input type="text" name="address" placeholder="Адреса" required>
+                <input type="text" name="friendCode" placeholder="Код друга">
+                <button type="button" onclick="goToMake_an_order_12Page()">Продовжити</button>
+            </form>
         </div>
-    </div>
-
-    <script>
-        (function() {
-            var a = document.getElementById('myHeader'), b = null;
-            window.addEventListener('scroll', Ascroll, false);
-            document.body.addEventListener('scroll', Ascroll, false);
-            function Ascroll() {
-                if (b == null) {
-                    var Sa = getComputedStyle(a, ''), s = '';
-                    for (var i = 0; i < Sa.length; i++) {
-                        if (Sa[i].indexOf('overflow') == 0 || Sa[i].indexOf('padding') == 0 || Sa[i].indexOf('border') == 0 || Sa[i].indexOf('outline') == 0 || Sa[i].indexOf('box-shadow') == 0 || Sa[i].indexOf('background') == 0) {
-                            s += Sa[i] + ': ' + Sa.getPropertyValue(Sa[i]) + '; ';
-                        }
-                    }
-                    b = document.createElement('div');
-                    b.style.cssText = s + ' box-sizing: border-box; width: ' + a.offsetWidth + 'px;';
-                    a.insertBefore(b, a.firstChild);
-                    var l = a.childNodes.length;
-                    for (var i = 1; i < l; i++) {
-                        b.appendChild(a.childNodes[1]);
-                    }
-                    a.style.height = b.getBoundingClientRect().height + 'px';
-                    a.style.padding = '0';
-                    a.style.border = '0';
-                }
-                if (a.getBoundingClientRect().top <= 0) {
-                    b.className = 'sticky';
-                } else {
-                    b.className = '';
-                }
-                window.addEventListener('resize', function() {
-                    a.children[0].style.width = getComputedStyle(a, '').width;
-                }, false);
-            }
-        })();
-    </script>
     </div>
     <footer>
         <div class="footer-container">
@@ -236,13 +200,12 @@
                     <li><img src="/Image/card_11041038.png" alt="Visa"></li>
                     <li><img src="/Image/logo_14062982.png" alt="Mastercard"></li>
                     <li><img src="/Image/paypal_888870.png" alt="PayPal"></li>
-                    <!-- Додайте інші іконки за потреби -->
                 </ul>
             </div>
         </div>
         <div class="container">
             <p>&copy; Компанія NeatWave. 2024 рік</p>
-                <p> Прототип сайту.</p>
+            <p> Прототип сайту.</p>
         </div>
     </footer>
 </body>

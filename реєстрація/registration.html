@@ -150,6 +150,9 @@
         function goTotestimonialsPage() {
             window.location.href = "/головна/index.html#testimonials";
         }
+        function goToprisePage() {
+            window.location.href = "/ціна/prise.html";
+        }
     </script>
 </head>
 <body>
@@ -173,7 +176,7 @@
     <div class="conе">
         <div class="auth-container1">
             <h2>Регістрація</h2>
-            <form name="registrationForm" onsubmit="return validateForm()" action="/головна/index.html" method="post">
+            <form action="/головна/index.html" onsubmit="return validateForm()">
                 <input type="text" name="name" placeholder="ПІБ" required>
                 <input type="text" name="phone" placeholder="Номер телефону" required onkeypress="allowOnlyNumbers(event)">
                 <input type="email" name="email" placeholder="Пошта" required>
